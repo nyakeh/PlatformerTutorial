@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody rb;
     [SerializeField] float movementSpeed = 6f;
-    [SerializeField] float jumpForce = 5f;
+    [SerializeField] float jumpForce = 3f;
     
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask ground;
@@ -26,8 +26,22 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetButtonDown("Jump") && IsGrounded())
         {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+            Jump();
         }   
+    }
+
+    void Jump()
+    {
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy Head"))
+        {
+            Destroy(collision.transform.parent.gameObject);
+            Jump();
+        }
     }
 
     bool IsGrounded()
