@@ -4,10 +4,10 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody rb;
     [SerializeField] float movementSpeed = 6f;
-    [SerializeField] float jumpForce = 3f;
-    
+    [SerializeField] float jumpForce = 3f;    
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask ground;
+    [SerializeField] AudioSource jumpSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     void Jump()
     {
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+        jumpSound.Play();
     }
 
     void OnCollisionEnter(Collision collision)
